@@ -94,12 +94,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="Closure 类被定义为 final，有什么作用？final 关键字能修饰类、方法。当修饰类时，该类无法被继承；当修饰方法时，该方法不能被重定义(redefined)。 在面向对象中，该特性的目保护的类、方法，不希望被子类重写、破坏。final 常用于一些固定的方法。 注意：  1、父类中的方法是 static，加上 final ，也不能被子类重定义 2、如果希望对 final 类进行扩展，可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php-closure-knowlege-transfer">
+<meta property="og:url" content="http://yoursite.com/2018/02/23/php-closure-knowlege-transfer/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Closure 类被定义为 final，有什么作用？final 关键字能修饰类、方法。当修饰类时，该类无法被继承；当修饰方法时，该方法不能被重定义(redefined)。 在面向对象中，该特性的目保护的类、方法，不希望被子类重写、破坏。final 常用于一些固定的方法。 注意：  1、父类中的方法是 static，加上 final ，也不能被子类重定义 2、如果希望对 final 类进行扩展，可以">
+<meta property="og:updated_time" content="2018-02-23T05:27:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="php-closure-knowlege-transfer">
+<meta name="twitter:description" content="Closure 类被定义为 final，有什么作用？final 关键字能修饰类、方法。当修饰类时，该类无法被继承；当修饰方法时，该方法不能被重定义(redefined)。 在面向对象中，该特性的目保护的类、方法，不希望被子类重写、破坏。final 常用于一些固定的方法。 注意：  1、父类中的方法是 static，加上 final ，也不能被子类重定义 2、如果希望对 final 类进行扩展，可以">
 
 
 
@@ -128,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/23/php-closure-knowlege-transfer/"/>
 
 
 
 
 
-  <title>Hexo</title>
+  <title>php-closure-knowlege-transfer | Hexo</title>
   
 
 
@@ -159,9 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,9 +246,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -276,9 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/23/php-closure-knowlege-transfer/" itemprop="url">php-closure-knowlege-transfer</a></h1>
+          <h1 class="post-title" itemprop="name headline">php-closure-knowlege-transfer</h1>
         
 
         <div class="post-meta">
@@ -328,9 +328,7 @@
       
 
       
-        
-          
-            <h2 id="Closure-类被定义为-final，有什么作用？"><a href="#Closure-类被定义为-final，有什么作用？" class="headerlink" title="Closure 类被定义为 final，有什么作用？"></a>Closure 类被定义为 final，有什么作用？</h2><p><code>final</code> 关键字能修饰类、方法。当修饰类时，该类无法被继承；当修饰方法时，该方法不能被重定义(redefined)。</p>
+        <h2 id="Closure-类被定义为-final，有什么作用？"><a href="#Closure-类被定义为-final，有什么作用？" class="headerlink" title="Closure 类被定义为 final，有什么作用？"></a>Closure 类被定义为 final，有什么作用？</h2><p><code>final</code> 关键字能修饰类、方法。当修饰类时，该类无法被继承；当修饰方法时，该方法不能被重定义(redefined)。</p>
 <p>在面向对象中，该特性的目保护的类、方法，不希望被子类重写、破坏。<code>final</code> 常用于一些固定的方法。</p>
 <p>注意：</p>
 <ul>
@@ -387,8 +385,6 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> view(<span class="string">'welcome'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>……</p>
 
-          
-        
       
     </div>
     
@@ -405,134 +401,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/14/personal-website-collection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/14/personal-website-collection/" itemprop="url">网址收藏</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-14T08:28:47+08:00">
-                2018-02-14
-              </time>
+              <a href="/2018/02/14/personal-website-collection/" rel="next" title="网址收藏">
+                <i class="fa fa-chevron-left"></i> 网址收藏
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><p><a href="https://cli.im/" target="_blank" rel="noopener">草料二维码</a></p>
-<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p><a href="https://laravel-china.org/topics/2758/dingoapi-document-translation" target="_blank" rel="noopener">DingoAPI</a></p>
-<h2 id="电脑软件"><a href="#电脑软件" class="headerlink" title="电脑软件"></a>电脑软件</h2><p><a href="https://www.isofts.org/" target="_blank" rel="noopener">Mac 志</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -542,10 +432,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -553,6 +444,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -573,8 +468,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -618,6 +522,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Closure-类被定义为-final，有什么作用？"><span class="nav-number">1.</span> <span class="nav-text">Closure 类被定义为 final，有什么作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closure-类的构造函数为什么是-private-类型的？"><span class="nav-number">2.</span> <span class="nav-text">Closure 类的构造函数为什么是 private 类型的？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-1-单例模式"><span class="nav-number">2.1.</span> <span class="nav-text">示例 1: 单例模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind-和-bindTo-方法是用来做什么的？这两个方法有什么异同？可否用实际的例子说明？"><span class="nav-number">3.</span> <span class="nav-text">bind 和 bindTo 方法是用来做什么的？这两个方法有什么异同？可否用实际的例子说明？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例1："><span class="nav-number">3.1.</span> <span class="nav-text">示例1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例2："><span class="nav-number">3.2.</span> <span class="nav-text">示例2：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#invoke-方法有什么作用？什么是-calling-magic？什么是魔术方法-invoke-方法会变什么魔术？"><span class="nav-number">4.</span> <span class="nav-text">_invoke 方法有什么作用？什么是 calling magic？什么是魔术方法? __invoke 方法会变什么魔术？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-方法有什么用？"><span class="nav-number">5.</span> <span class="nav-text">call 方法有什么用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Laravel-中有哪些地方用到了-Closure？"><span class="nav-number">6.</span> <span class="nav-text">Laravel 中有哪些地方用到了 Closure？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -731,10 +651,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
