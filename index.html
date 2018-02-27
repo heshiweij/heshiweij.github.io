@@ -260,6 +260,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://svenhe.com/2018/02/27/resolve-mysql-cannot-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sven.He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码农实验室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/27/resolve-mysql-cannot-start/" itemprop="url">MySQL 无法启动问题修复过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-27T13:43:15+08:00">
+                2018-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天想把项目部署到测试服务器上，加了几个 nginx 配置文件，执行 lnmp restart 提示如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql.serviceJob for mysql.service failed because the control process exited</span><br></pre></td></tr></table></figure>
+<p>mysql 无法正常启动</p>
+<p>执行 <code>lnmp mysql start</code>，提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql.service - LSB: start and stop MySQL</span><br><span class="line">  Loaded: loaded (/etc/init.d/mysql; bad; vendor preset: enabled)</span><br><span class="line">  Active: failed (Result: exit-code) since Tue 2018-02-27 10:27:55 CST; 6s ago</span><br><span class="line">    Docs: man:systemd-sysv-generator(8)</span><br><span class="line"> Process: 19955 ExecStop=/etc/init.d/mysql stop (code=exited, status=0/SUCCESS)</span><br><span class="line"> Process: 27969 ExecStart=/etc/init.d/mysql start (code=exited, status=1/FAILURE)</span><br></pre></td></tr></table></figure>
+<p>执行 <code>journalctl -xe</code> 提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- Unit mysqld.service has begun starting up.</span><br><span class="line">Jan 20 18:26:57 spark01 mysqld[2979]: MySQL Daemon failed to start.</span><br><span class="line">Jan 20 18:26:57 spark01 mysqld[2979]: Starting mysqld:  [FAILED]</span><br><span class="line">Jan 20 18:26:57 spark01 systemd[1]: mysqld.service: control process exited, code=exited status=1</span><br><span class="line">Jan 20 18:26:57 spark01 systemd[1]: Failed to start SYSV: MySQL database server..</span><br><span class="line"></span><br><span class="line">Can&apos;t connect to local MySQL server through socket &apos;/tmp/mysql.sock&apos;</span><br></pre></td></tr></table></figure>
+<p>提示无法连接到本地的 /tmp/mysql.sock。于是，<code>ls -lah /tmp/mysql.sock</code>  发现文件不存在。</p>
+<p>以为是 /tmp/mysql.sock 丢失，于是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -f mysql.sock</span><br></pre></td></tr></table></figure>
+<p>结果为空</p>
+<p>以为是 pid 冲突，删除  PID ，依然无法启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -f /usr/local/mysql/var/iZm5e2lm9rv.PID</span><br></pre></td></tr></table></figure>
+<p>百度搜索，需要重建 mysql.sock.</p>
+<p>首先修改 /etc/passwd，启用 mysql 账户登录，接着当执行到</p>
+<p>当执行到 <code>/usr/local/bin/mysql_install_db</code> 时，提示磁盘空间不足</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No space left on device。</span><br></pre></td></tr></table></figure>
+<p>于是查看查看磁盘、分区使用情况</p>
+<p>sudo fdisk -l</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Disk /dev/ram0: 64 MiB, 67108864 bytes, 131072 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line">I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/ram1: 64 MiB, 67108864 bytes, 131072 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line">I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/ram2: 64 MiB, 67108864 bytes, 131072 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line">I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>df -h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            2.0G     0  2.0G   0% /dev</span><br><span class="line">tmpfs           396M  3.1M  393M   1% /run</span><br><span class="line">/dev/vda1        40G   38G     0 100% /</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /dev/shm</span><br><span class="line">tmpfs           5.0M  4.0K  5.0M   1% /run/lock</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup</span><br><span class="line">tmpfs           396M     0  396M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+<p>发现分区已经满了， / 挂载的 /dev/vda1 ，Avail 为 0 bytes。  猜测这就是导致 mysql 无法启动的主因。<br>磁盘空间满了，无法创建 mysql 启动所需的 mysql.sock 文件。导致启动失败。 但是在重启前，是可以登陆 mysql 的，因为 mysql.sock 还在，但是网站部分功能出现 500 server error 。</p>
+<h2 id="找出占用最大的前-10-个文件"><a href="#找出占用最大的前-10-个文件" class="headerlink" title="找出占用最大的前 10 个文件"></a>找出占用最大的前 10 个文件</h2><p>du -a | sort -n -r | head -n 10</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">33789684        .</span><br><span class="line">25432856        ./usr</span><br><span class="line">23674192        ./usr/local</span><br><span class="line">22779196        ./usr/local/mysql</span><br><span class="line">20954940        ./usr/local/mysql/var</span><br><span class="line">4979212 ./var</span><br><span class="line">3630964 ./var/lib</span><br><span class="line">3391528 ./var/lib/mongodb</span><br><span class="line">3145748 ./var/lib/mongodb/journal</span><br><span class="line">1721980 ./home</span><br></pre></td></tr></table></figure>
+<p>可以看到，占用最大的是 <code>./usr/local/mysql/var</code>，查阅 my.cnf 发现该目录是 mysql 的数据目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">port        = 3306</span><br><span class="line">socket      = /tmp/mysql.sock</span><br><span class="line">datadir = /usr/local/mysql/var</span><br></pre></td></tr></table></figure>
+<p>ls -lah  /usr/local/mysql/var</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.....</span><br><span class="line"></span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 18 02:16 mysql-bin.000133</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 18 02:42 mysql-bin.000134</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 19 02:08 mysql-bin.000135</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 19 02:35 mysql-bin.000136</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 20 02:01 mysql-bin.000137</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 20 02:27 mysql-bin.000138</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 20 02:54 mysql-bin.000139</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 21 02:20 mysql-bin.000140</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 21 02:47 mysql-bin.000141</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 22 02:13 mysql-bin.000142</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 22 02:39 mysql-bin.000143</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 23 02:05 mysql-bin.000144</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 23 02:32 mysql-bin.000145</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 23 02:58 mysql-bin.000146</span><br><span class="line">-rw-r-----  1 mysql mysql  68M Feb 23 15:55 mysql-bin.000147</span><br><span class="line">-rw-r-----  1 mysql mysql  12K Feb 23 15:59 mysql-bin.000148</span><br><span class="line">-rw-r-----  1 mysql mysql 104K Feb 23 16:02 mysql-bin.000149</span><br><span class="line">-rw-r-----  1 mysql mysql 5.3K Feb 23 16:04 mysql-bin.000150</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 24 02:17 mysql-bin.000151</span><br><span class="line">-rw-r-----  1 mysql mysql 152M Feb 24 02:21 mysql-bin.000152</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 24 02:48 mysql-bin.000153</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 25 02:14 mysql-bin.000154</span><br><span class="line">-rw-r-----  1 mysql mysql 1.1G Feb 25 02:40 mysql-bin.000155</span><br><span class="line">-rw-r-----  1 mysql mysql 763M Feb 27 09:54 mysql-bin.000156</span><br><span class="line">-rw-r-----  1 mysql mysql 172K Feb 27 13:25 mysql-bin.000157</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+<p>发现该文件为 mysql 日志文件，每个日志 1G，而主分区才 40G</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>1、快照后，删除日志文件，重启 lnmp </p>
+<p>rm /usr/local/mysql/var/mysql-bin.000133<br>…</p>
+<p>2、关闭 mysql 日志</p>
+<p>vim /etc/my.cnf 注释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log-bin=mysql-bin </span><br><span class="line">binlog_format=mixed</span><br></pre></td></tr></table></figure>
+<p>命令行登陆 mysql，重置 master</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">reset master;</span><br></pre></td></tr></table></figure>
+<p>重启 mysql</p>
+<p>lnmp mysql restart</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>关闭 mysql 日志，可以解决这个问题，但失去了日志功能，期待更好的方法…<br>1、定期维护，将日志转移到别的服务器<br>2、…</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>CentOS 7下MySQL服务启动失败的解决思路<br><a href="https://www.cnblogs.com/ivictor/p/5146247.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5146247.html</a></p>
+<p>Linux下Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’ mysql service 无法正常启动和关闭<br><a href="http://blog.csdn.net/dongfangxiaozi_/article/details/72974580" target="_blank" rel="noopener">http://blog.csdn.net/dongfangxiaozi_/article/details/72974580</a></p>
+<p>lnmp下如何如何禁用Mysql日志<br><a href="https://www.cnblogs.com/naniannayue/archive/2011/08/16/2140307.html" target="_blank" rel="noopener">https://www.cnblogs.com/naniannayue/archive/2011/08/16/2140307.html</a></p>
+<p>LNMP关闭Mysql日志的方法详解<br><a href="https://yq.aliyun.com/ziliao/54317" target="_blank" rel="noopener">https://yq.aliyun.com/ziliao/54317</a></p>
+<p>启动mysql时显示：/tmp/mysql.sock 不存在的解决方法<br><a href="https://www.cnblogs.com/summer-cool/p/3959699.html" target="_blank" rel="noopener">https://www.cnblogs.com/summer-cool/p/3959699.html</a></p>
+<p>mysql重建/tmp/mysql/sock方法详解<br><a href="https://yq.aliyun.com/ziliao/59912" target="_blank" rel="noopener">https://yq.aliyun.com/ziliao/59912</a></p>
+<p>怎样查看mysql pid文件路径 文件位置<br><a href="http://blog.csdn.net/u010098331/article/details/50786269" target="_blank" rel="noopener">http://blog.csdn.net/u010098331/article/details/50786269</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://svenhe.com/2018/02/25/php-PSR1-basic-coding-standard/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -738,7 +904,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
