@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="码农实验室">
 <meta property="og:description" content="今天想把项目部署到测试服务器上，加了几个 nginx 配置文件，执行 lnmp restart 提示如下信息 1mysql.serviceJob for mysql.service failed because the control process exited mysql 无法正常启动 执行 lnmp mysql start，提示 123456mysql.service - LSB: star">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-27T05:46:56.000Z">
+<meta property="og:updated_time" content="2018-02-27T05:57:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 无法启动问题修复过程">
 <meta name="twitter:description" content="今天想把项目部署到测试服务器上，加了几个 nginx 配置文件，执行 lnmp restart 提示如下信息 1mysql.serviceJob for mysql.service failed because the control process exited mysql 无法正常启动 执行 lnmp mysql start，提示 123456mysql.service - LSB: star">
@@ -329,7 +329,7 @@
       
 
       
-        <p>今天想把项目部署到测试服务器上，加了几个 nginx 配置文件，执行 lnmp restart 提示如下信息</p>
+        <p>今天想把项目部署到测试服务器上，加了几个 nginx 配置文件，执行 <code>lnmp restart</code> 提示如下信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql.serviceJob for mysql.service failed because the control process exited</span><br></pre></td></tr></table></figure>
 <p>mysql 无法正常启动</p>
 <p>执行 <code>lnmp mysql start</code>，提示</p>
@@ -367,7 +367,7 @@
 <p>命令行登陆 mysql，重置 master</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">reset master;</span><br></pre></td></tr></table></figure>
 <p>重启 mysql</p>
-<p>lnmp mysql restart</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lnmp mysql restart</span><br></pre></td></tr></table></figure>
 <h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>关闭 mysql 日志，可以解决这个问题，但失去了日志功能，期待更好的方法…<br>1、定期维护，将日志转移到别的服务器<br>2、…</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>CentOS 7下MySQL服务启动失败的解决思路<br><a href="https://www.cnblogs.com/ivictor/p/5146247.html" target="_blank" rel="noopener">https://www.cnblogs.com/ivictor/p/5146247.html</a></p>
 <p>Linux下Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’ mysql service 无法正常启动和关闭<br><a href="http://blog.csdn.net/dongfangxiaozi_/article/details/72974580" target="_blank" rel="noopener">http://blog.csdn.net/dongfangxiaozi_/article/details/72974580</a></p>
