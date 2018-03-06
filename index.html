@@ -260,6 +260,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://svenhe.com/2018/03/06/git-cheat-sheet-best-pracities/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sven.He">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="码农实验室">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/06/git-cheat-sheet-best-pracities/" itemprop="url">GIT 备忘录 & 最佳实践</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T18:02:39+08:00">
+                2018-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="GIT-备忘录"><a href="#GIT-备忘录" class="headerlink" title="GIT 备忘录"></a>GIT 备忘录</h1><h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><p>克隆一个已存在的仓库<br>git clone ssh://user@domain.com/repo.git</p>
+<h2 id="创建一个新的本地仓库"><a href="#创建一个新的本地仓库" class="headerlink" title="创建一个新的本地仓库"></a>创建一个新的本地仓库</h2><p>git init</p>
+<h2 id="本地改动"><a href="#本地改动" class="headerlink" title="本地改动"></a>本地改动</h2><p>查看工作目录中已修改的文件<br>git status</p>
+<p>查看已追踪文件的改动<br>git diff</p>
+<p>添加所有当前的改动到下一次提交<br>git add .</p>
+<p>添加某个文件中的改动到下一次提交<br>git add -p <file></file></p>
+<p>提交本地已被追踪文件中的所有改动<br>git commit -a</p>
+<p>提交暂存区改动<br>git commit</p>
+<p>修改最后一次提交<br>(不要修改已经发布的提交)<br>git commit –amend</p>
+<h2 id="提交历史"><a href="#提交历史" class="headerlink" title="提交历史"></a>提交历史</h2><p>显示所有提交记录，从最新的开始<br>git log</p>
+<p>跟踪查看某个文件的历史修改记录<br>git log -p <file></file></p>
+<p>查看谁在什么时候对于某个文件的修改记录<br>git blame <file></file></p>
+<h2 id="分支和标签"><a href="#分支和标签" class="headerlink" title="分支和标签"></a>分支和标签</h2><p>列出所有已存在的标签<br>git branch -av</p>
+<p>切换 HEAD 分支<br>git checkout <branch></branch></p>
+<p>基于你当前的 HEAD 创建一个新的分支<br>git branch <new-branch></new-branch></p>
+<p>基于远程的分支创建一个新的追踪分支<br>git checkout –track <remote branch=""></remote></p>
+<p>删除一个本地分支<br>git branch -d <branch></branch></p>
+<p>标记当前的提交记录为一个 tag<br>git tag <tag-name></tag-name></p>
+<h2 id="更新和发布"><a href="#更新和发布" class="headerlink" title="更新和发布"></a>更新和发布</h2><p>列出所有当前已配置的远程仓库<br>git remote -v</p>
+<p>显示远程仓库的信息<br>git remote show <remote></remote></p>
+<p>添加一个新的远程仓库<br>git remote add <shortname> <url></url></shortname></p>
+<p>从远程仓库下载所有的改动<br>（但是不会与 HEAD 合并，换而言之，需要手动合并）</p>
+<p>git fetch <remote></remote></p>
+<p>从远程仓库下载所有的改动，并且直接合并到 HEAD<br>git pull <remote> <branch></branch></remote></p>
+<p>发布本地改动到远程仓库<br>git push <remote> <branch></branch></remote></p>
+<p>在远程仓库删除一个分支<br>git branch -dr <remote branch=""></remote></p>
+<p>发布标签<br>git push –tags</p>
+<h2 id="合并与衍合"><a href="#合并与衍合" class="headerlink" title="合并与衍合"></a>合并与衍合</h2><p>合并一个分支到你当前 HEAD<br>git merge <branch></branch></p>
+<p>在指定的分支之上衍合你当前分支<br>git rebase <branch></branch></p>
+<p>终止衍合<br>git rebase –abort</p>
+<p>解决冲突之后，继续衍合<br>git rebase –continue</p>
+<p>使用你已经配置的合并工具去解决冲突<br>git mergetool</p>
+<p>使用你自己的编辑器手动解决冲突并且在解决冲突后将文件标记为已解决<br>git add <resolved- le=""><br>git rm <resolved- le=""></resolved-></resolved-></p>
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><p>擦除工作目录中所有的改动（到最近一次提交）<br>git reset –hard HEAD</p>
+<p>擦除指定文件的改动（到最近一次提交）<br>git checkout HEAD <file></file></p>
+<p>回退一次提交（会产生一次新的提交）<br>git revert <commit></commit></p>
+<p>重置你的 HEAD 指针到一个之前的提交，并且此操作会擦除从那以后所有的改动<br>git reset –hard <commit></commit></p>
+<p>重置你的 HEAD 指针到一个之前的提交，并且将所有的改动以未加入暂存区的状态保留<br>git reset <commit></commit></p>
+<p>重置你的 HEAD 指针到一个之前的提交，并且将所有的改动以未提交的状态保留<br>git reset –keep <commit></commit></p>
+<p>版本控制最佳实践</p>
+<h2 id="提交相关的改动"><a href="#提交相关的改动" class="headerlink" title="提交相关的改动"></a>提交相关的改动</h2><p>一次提交应该只包含相关的改动。例如：修改两个不同的 bug，应该产生两次不同的提交。 小的提交使其他开发者更容易理解所做的改动，一旦发生错误，也容易回退。暂存区和“只将部分文件暂存”的能力，让 git 很容易创建细粒度的提交。</p>
+<h2 id="经常提交代码"><a href="#经常提交代码" class="headerlink" title="经常提交代码"></a>经常提交代码</h2><p>经常提交代码能保证你每次提交的代码小巧并且帮助你每次只提交相关代码，而且，它有助于你经常和其他人分享代码。你会让其他人更好的集成你的改动，避免产生合并冲突。提交一大堆代码并且很少和其他人分享，相反的，会导致难以解决冲突。</p>
+<h2 id="不要提交半成品工作"><a href="#不要提交半成品工作" class="headerlink" title="不要提交半成品工作"></a>不要提交半成品工作</h2><p>你应该在代码完成后再提交。但这并不意味着你在提交之前必须先完成整个或者一个非常大的功能。 恰恰相反，将功能实现分割成一个个逻辑块然后记得及时、经常提交代码。当时不要在你下班离开办公室之前提交代码。如果你只想为了清空工作空间的改动而提交代码，那么建议你使用 Git 的 “Stash” 特性代替。</p>
+<h2 id="提交代码前需要进行测试"><a href="#提交代码前需要进行测试" class="headerlink" title="提交代码前需要进行测试"></a>提交代码前需要进行测试</h2><p>不要立即提交你认为已经完成的代码。你需要测试它，确保已经彻底的完成了并且没有副作用。在本地仓库中提交不成熟的代码你只需要原谅你自己（换句话说，一旦发布到生产环境，就需要考虑别人是否原意原谅你了），所以在你发布、和他人共享代码之前，对代码进行测试变得尤为重要。</p>
+<h2 id="撰写良好的提交信息"><a href="#撰写良好的提交信息" class="headerlink" title="撰写良好的提交信息"></a>撰写良好的提交信息</h2><p>以你对本次修改的总结作为开头行，并且用一个空行分割下面的信息内容。消息内容就是需要你回答下面的问题。</p>
+<blockquote>
+<p>这次提交的动机是什么？<br>它和之前的实现方式有什么区别？<br>使用现在时（«change», 不是 «changed» 和 «changes»）保持和 git merge 命令产生的消息格式一致。</p>
+</blockquote>
+<h2 id="版本控制不是备份系统"><a href="#版本控制不是备份系统" class="headerlink" title="版本控制不是备份系统"></a>版本控制不是备份系统</h2><p>备份你的文件到远程仓库，是 git 带来的一个很好的副产物。但是你不应该把 git 当做一个文件备份系统。 当你在使用版本控制工具，更关注应该是语义，而不是仅仅将文件简单粗暴的备份。</p>
+<h1 id="使用分支"><a href="#使用分支" class="headerlink" title="使用分支"></a>使用分支</h1><p>分支是 Git 最强大的特性，简单而快速的分支是一天工作的中心。分支是一个完美的工具，帮助你避免混淆不同开发者修改的不同行。  你应该在开发工作中广泛的使用分支，用于：新特性、bug 修复、新想法等。</p>
+<h2 id="采用一致的工作流"><a href="#采用一致的工作流" class="headerlink" title="采用一致的工作流"></a>采用一致的工作流</h2><p>Git 允许你创建大量不同的工作流，长期运行分支、话题分支、合并衍生、git-flow… ， 你选择哪一个取决于如下几个因素：项目、整体开发和部署工作流、以及可能是最重要的，你个人和团队的使用习惯。不管你选择哪种，只需要确保和其他人参与项目的人达成一致。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://svenhe.com/2018/02/27/resolve-mysql-cannot-start/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -904,7 +1074,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
